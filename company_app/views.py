@@ -19,33 +19,12 @@ class CompaniesApiView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        company_name = request.data['name']
-        company_bin = request.data['bin']
-        company_country = request.data['country']
-
-        company_industry = Industry.objects.get(pk=request.data['industry'])
-
-        company_employee_count = 0
-        if 'employee_count' in request.data.keys():
-            company_employee_count = request.data['employee_count']
-
-        company_parent = None
-        if 'parent' in request.data.keys():
-            company_parent = request.data['parent']
-            if company_parent is not None:
-                company_parent = Company.objects.get(pk=request.data['parent'])
-
-        new_company = Company(
-            name=company_name,
-            bin=company_bin,
-            country=company_country,
-            employee_count=company_employee_count,
-            industry=company_industry,
-            parent=company_parent
-        )
-        new_company.save()
-
-        return Response({'message': 'Company created'}, status=status.HTTP_201_CREATED)
+        serializer = CompanySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Company created'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Server Error'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

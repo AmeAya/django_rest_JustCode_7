@@ -63,10 +63,3 @@ class CompaniesDetailApiView(APIView):
                 return Response({'message': 'Wrong keys!'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'message': 'Company not found'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-# Создать сериалайзер для Industry.
-# Создать два Апи вью для Industry:
-#   1) GetAllIndustries -> Возвращает все Индустрии
-#   2) GetIndustryDetail -> Возвращает только 1 индустрию по id, который принимает.
-# Создать Апи вью, возвращающий только те Индустрии, имена которых начинаются на букву, принятую get запросом

@@ -1,1 +1,4 @@
 .idea
+core/__pycache__/
+company_app/__pycache__/
+company_app/migrations/__pycache__/

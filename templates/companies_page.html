@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Companies</title>
+</head>
+<body style="font-family: sans-serif">
+    <div id="content">
+
+    </div>
+    <script>
+        window.onload = () => {
+            var div_content = document.getElementById('content');
+            var request = new XMLHttpRequest();
+
+            request.onreadystatechange = function() {
+                if (request.readyState == 4) {
+                    var response = JSON.parse(request.responseText);
+                    var companies = response['companies'];
+
+                    for (var company of companies) {
+
+                        var url = "'company_detail/" + company['id'] + "'";
+                        div_content.innerHTML += '<h2>' + company['name'] + ' <button onclick="location.href=' + url + '">More Info</button></h2>';
+                        div_content.innerHTML += '<p>' + company['country'] + '</p>';
+                    }
+                }
+            }
+
+            request.open('get', "{% url 'companies_api_url' %}", true);
+            request.send()
+        }
+    </script>
+</body>
+</html>
